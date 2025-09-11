@@ -5,4 +5,4 @@ COPY . .
 
 RUN bun install --production
 
-CMD [ "bun", 'run', 'src/index.ts' ]
+CMD [ "bun", "run", "src/index.ts" ]
