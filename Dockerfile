@@ -3,4 +3,6 @@ WORKDIR /app
 
 COPY . .
 
+RUN bun install --production
+
 CMD [ "bun", 'run', 'src/index.ts' ]
