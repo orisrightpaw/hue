@@ -1,0 +1,10 @@
+services:
+    main:
+        image: hue
+        restart: unless-stopped
+        build:
+            context: .
+        env_file:
+            - .env
+        volumes:
+            - ./data:/app/data

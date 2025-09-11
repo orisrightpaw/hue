@@ -1,0 +1,21 @@
+{
+    "name": "hue",
+    "module": "src/index.ts",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "bun run --watch .",
+        "update": "bun run scripts/update.ts"
+    },
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "oceanic.js": "^1.12.0",
+        "pako": "^2.1.0",
+        "zod": "^4.0.17"
+    }
+}
