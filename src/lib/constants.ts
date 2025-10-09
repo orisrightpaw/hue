@@ -2,15 +2,15 @@ import { MessageFlags } from "oceanic.js";
 
 export const Responses = {
     UNHANDLED_COMMAND: {
-        content: "unhandled command! please report this to <@1403243639894966323>!",
+        content: "unhandled command! please report this to <@1419909704410202176>!",
         flags: MessageFlags.EPHEMERAL,
     },
     UNHANDLED_INTERACTION: {
-        content: "unhandled interaction! please report this to <@1403243639894966323>!",
+        content: "unhandled interaction! please report this to <@1419909704410202176>!",
         flags: MessageFlags.EPHEMERAL,
     },
     UNKNOWN_SLASH_COMMAND: {
-        content: "unknown slash command! please report this to <@1403243639894966323>!",
+        content: "unknown slash command! please report this to <@1419909704410202176>!",
         flags: MessageFlags.EPHEMERAL,
     },
     USER_COMMANDS_NOT_SUPPORTED: {

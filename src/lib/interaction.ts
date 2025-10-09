@@ -120,4 +120,37 @@ export const interactions = [
             },
         ],
     },
+    {
+        type: ApplicationCommandTypes.CHAT_INPUT,
+        name: "whitelist",
+        description: "manage the minecraft server whitelist",
+        options: [
+            {
+                type: ApplicationCommandOptionTypes.SUB_COMMAND,
+                name: "add",
+                description: "add a user to the whitelist",
+                options: [
+                    {
+                        type: ApplicationCommandOptionTypes.STRING,
+                        name: "username",
+                        description: "the username",
+                        required: true,
+                    },
+                ],
+            },
+            {
+                type: ApplicationCommandOptionTypes.SUB_COMMAND,
+                name: "remove",
+                description: "remove a user from the whitelist",
+                options: [
+                    {
+                        type: ApplicationCommandOptionTypes.STRING,
+                        name: "username",
+                        description: "the username",
+                        required: true,
+                    },
+                ],
+            },
+        ],
+    },
 ] satisfies Array<CreateGuildApplicationCommandOptions>;

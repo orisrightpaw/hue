@@ -1,6 +1,7 @@
 import {
     ApplicationCommandTypes,
     InteractionTypes,
+    MessageFlags,
     type AnyInteractionGateway,
     type Client,
     type InteractionGuild,
@@ -19,11 +20,18 @@ export default async function (client: Client, interaction: AnyInteractionGatewa
             if (interaction.data.type === ApplicationCommandTypes.CHAT_INPUT) {
                 let command = commands[interaction.data.name as keyof typeof commands] as Command | CommandGroup;
                 if (!(command instanceof Function))
-                    command = command[interaction.data.options.getSubCommand()?.[0] as string] as Command;
+                    command = command?.[interaction.data.options.getSubCommand()?.[0] as string] as Command;
                 if (!command) return await interaction.editOriginal(Responses.UNKNOWN_SLASH_COMMAND);
 
+                if (!interaction.member) return;
+                if (!interaction.member.permissions.has("ADMINISTRATOR"))
+                    return await interaction.reply({
+                        content: "missing permissions to run this command!",
+                        flags: MessageFlags.EPHEMERAL,
+                    });
+
                 return await command(client, {
-                    user: interaction.user,
+                    user: interaction.member,
                     guild: interaction.guild || (interaction.guildPartial as InteractionGuild),
                     args: await interpretSlashCommand(client, interaction),
                     actions: {

@@ -1,4 +1,4 @@
-import type { User, Guild, InteractionGuild, AllowedMentions, Embed } from "oceanic.js";
+import type { Guild, InteractionGuild, AllowedMentions, Embed, Member } from "oceanic.js";
 import type { Arguments } from "./validator";
 
 export type ReplyParams = {
@@ -10,7 +10,7 @@ export type ReplyParams = {
 
 export type CommandParamaters = {
     args: Arguments;
-    user: User;
+    user: Member;
     guild: Guild | InteractionGuild;
     actions: {
         reply: (params: ReplyParams) => Promise<any>;
