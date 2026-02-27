@@ -9,7 +9,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const target = args.find((_) => _.type === ApplicationCommandOptionTypes.USER && _.name === "user");
     if (!target)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toroslap:1316993829299027978> arguments missing",
                 description: "please provide user argument!",
@@ -19,7 +19,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const [record] = REACT_GET_USER.all(target.value) as { user_id: string; emote_id: string }[];
     if (!record)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toroslap:1316993829299027978> unknown user",
                 description: "that user doesnt have an autoreaction!",
@@ -31,7 +31,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
         REACT_DELETE_USER.all(record.user_id);
         updateWatchedPhrases();
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toroqmark:1376186413510295602> unknown emote",
                 description: "that user isn't here anymore... removing!",
@@ -44,7 +44,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
         REACT_DELETE_USER.all(record.user_id);
         updateWatchedPhrases();
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toroqmark:1376186413510295602> unknown emote",
                 description: "that user's autoreaction is set to an unknown emote... removing!",
@@ -53,7 +53,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     }
 
     return await actions.reply({
-        embeds: createSingleEmbed(user, {
+        embeds: createSingleEmbed(user.user, {
             color: Colors.SUCCESS,
             title: `<a:y9_torosniffsniff:1382515047691190312> autoreaction for @${resolvedMember.username}`,
             description: `## <${resolvedEmote.animated ? "a" : ""}:${resolvedEmote.name}:${resolvedEmote.id}>`,

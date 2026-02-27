@@ -9,7 +9,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const target = args.find((_) => _.type === ApplicationCommandOptionTypes.USER && _.name === "user");
     if (!target)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toropomf:1329958023732400278> arguments missing",
                 description: "please provide user argument!",
@@ -19,7 +19,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const [record] = REACT_GET_USER.all(target.value) as { user_id: string; emote_id: string }[];
     if (!record)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_toropomf:1329958023732400278> unknown user",
                 description: "that user doesnt have an autoreaction!",
@@ -30,9 +30,9 @@ export default async function (client: Client, { user, guild, args, actions }: C
     updateWatchedPhrases();
 
     return await actions.reply({
-        embeds: createSingleEmbed(user, {
+        embeds: createSingleEmbed(user.user, {
             color: Colors.SUCCESS,
-            title: "<a:y9_torothumbsup:1406895215112880240> autoreaction removed!",
+            title: "<a:h1_torothumbsup:1329956575544217600>autoreaction removed!",
             description: `removed <@${target.value}>'s autoreaction!`,
         }),
     });

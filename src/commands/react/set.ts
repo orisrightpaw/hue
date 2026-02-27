@@ -81,7 +81,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     return await actions.reply({
         embeds: createSingleEmbed(user.user, {
             color: Colors.SUCCESS,
-            title: "<a:y9_torothumbsup:1329956575544217600> autoreaction set!",
+            title: "<a:h1_torothumbsup:1329956575544217600> autoreaction set!",
             description: `set autoreaction for <@${resolvedMember.id}> to ${parsed[0]} !`,
         }),
     });

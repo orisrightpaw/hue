@@ -21,7 +21,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
 
     await actions.reply({
         embeds: [
-            createEmbed(user, {
+            createEmbed(user.user, {
                 title: `<a:y9_toronerd:1329956590337523784> autoreactions for ${guild.name}`,
                 description,
             }),
