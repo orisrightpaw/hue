@@ -11,7 +11,7 @@ export function createEmbed(user: User, embed: Embed): Embed {
                 iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
             },
         },
-        embed
+        embed,
     );
 }
 
@@ -26,7 +26,7 @@ export function createSingleEmbed(user: User, embed: Embed): Embed[] {
                     iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
                 },
             },
-            embed
+            embed,
         ),
     ];
 }

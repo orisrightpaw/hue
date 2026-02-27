@@ -4,7 +4,7 @@ import { REACT_GET_USER, REACT_INSERT_USER, REACT_UPDATE_USER, updateWatchedPhra
 import { createSingleEmbed } from "../../lib/embed";
 import { Colors } from "../../lib/constants";
 
-const EMOJI_REGEX = new RegExp(/^<(?:a:|:)(\w+):(\d+)>$/gm);
+const EMOJI_REGEX = /^<(?:a:|:)(\w+):(\d+)>$/gm;
 
 export default async function (client: Client, { user, guild, args, actions }: CommandParamaters) {
     if (!(guild instanceof Guild)) throw new Error("guild isnt here lol");
@@ -12,37 +12,42 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const emoji = args.find((_) => _.type === ApplicationCommandOptionTypes.STRING && _.name === "emote");
     if (!target || !emoji)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_torosob:1316992351318573110> arguments missing",
                 description: "please provide user and emote arguments!",
             }),
         });
 
-    const parsed = EMOJI_REGEX.exec(emoji.value.trim());
+    let m, parsed;
+    while ((m = EMOJI_REGEX.exec(emoji.value.trim())) !== null) {
+        if (m.index === EMOJI_REGEX.lastIndex) EMOJI_REGEX.lastIndex++;
+        parsed = m;
+    }
+
     if (!parsed)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_torosob:1316992351318573110> invalid emote",
-                description: "that emote isn't valid!",
+                description: "that emote isn't valid!\n\n(`" + emoji.value.trim() + "`)",
             }),
         });
     const emojiName = parsed[1];
     const emojiId = parsed[2];
     if (!emojiName || !emojiId)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_torosob:1316992351318573110> invalid emote",
-                description: "that emote isn't valid!",
+                description: "that emote isn't valid!\n\n(" + emojiName + " " + emojiId + ")",
             }),
         });
 
     const resolvedMember = await guild.getMember(target.value).catch((_) => false as false);
     if (!resolvedMember)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_torosob:1316992351318573110> invalid user",
                 description: "that user isn't in this server!",
@@ -52,7 +57,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     const resolvedEmoji = await guild.getEmoji(emojiId).catch((_) => false as false);
     if (!resolvedEmoji)
         return await actions.reply({
-            embeds: createSingleEmbed(user, {
+            embeds: createSingleEmbed(user.user, {
                 color: Colors.ERROR,
                 title: "<a:y9_torosob:1316992351318573110> invalid emote",
                 description: "that emote isn't in this server!",
@@ -74,7 +79,7 @@ export default async function (client: Client, { user, guild, args, actions }: C
     updateWatchedPhrases();
 
     return await actions.reply({
-        embeds: createSingleEmbed(user, {
+        embeds: createSingleEmbed(user.user, {
             color: Colors.SUCCESS,
             title: "<a:y9_torothumbsup:1329956575544217600> autoreaction set!",
             description: `set autoreaction for <@${resolvedMember.id}> to ${parsed[0]} !`,
